@@ -44,7 +44,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 
   const visitsWithRx = (visits || []).map((v: { id: string; [k: string]: unknown }) => ({
     ...v,
-    prescriptions: prescriptions.filter((p: { visit_id: string }) => p.visit_id === v.id),
+    prescriptions: prescriptions.filter((p: Record<string, unknown>) => p.visit_id === v.id),
   }));
 
   return NextResponse.json({ patient, visits: visitsWithRx, appointments, invoices });
