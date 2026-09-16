@@ -1,16 +1,11 @@
 "use client";
 
-type InvoiceFormProps = {
-  patients: { id: string; name: string; phone: string }[];
-  onSaved?: () => void;
-};
-
 import { useState } from "react";
 
-export default function InvoiceForm({ patients, onSaved }: InvoiceFormProps) {
+export default function InvoiceForm({ patients, onSaved }: { patients: { id: string; name: string; phone: string }[]; onSaved?: () => void }) {
   const [patientId, setPatientId] = useState("");
   const [amount, setAmount] = useState("");
-  const [method, setMethod] = useState("نقدي");
+  const [method, setMethod] = useState("Cash");
   const [paid, setPaid] = useState(true);
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,48 +19,36 @@ export default function InvoiceForm({ patients, onSaved }: InvoiceFormProps) {
       const res = await fetch("/api/admin/invoices", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          patient_id: patientId,
-          amount: Number(amount),
-          paid,
-          payment_method: method,
-          notes,
-        }),
+        body: JSON.stringify({ patient_id: patientId, amount: Number(amount), paid, payment_method: method, notes }),
       });
       const data = await res.json();
-      if (!res.ok) { setMsg(data.error || "خطأ"); return; }
-      setMsg("تم إنشاء الفاتورة");
-      setPatientId("");
-      setAmount("");
-      setNotes("");
+      if (!res.ok) { setMsg(data.error || "Error"); return; }
+      setMsg("Invoice created");
+      setPatientId(""); setAmount(""); setNotes("");
       onSaved?.();
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   }
 
   return (
     <div className="grid gap-3 md:grid-cols-5 items-end">
       <select className="form-input" value={patientId} onChange={(e) => setPatientId(e.target.value)}>
-        <option value="">اختر المريض *</option>
-        {patients.map((p) => (
-          <option key={p.id} value={p.id}>{p.name} — {p.phone}</option>
-        ))}
+        <option value="">Select Patient *</option>
+        {patients.map((p) => <option key={p.id} value={p.id}>{p.name} — {p.phone}</option>)}
       </select>
-      <input className="form-input" type="number" placeholder="المبلغ *" value={amount} onChange={(e) => setAmount(e.target.value)} />
+      <input className="form-input" type="number" placeholder="Amount *" value={amount} onChange={(e) => setAmount(e.target.value)} />
       <select className="form-input" value={method} onChange={(e) => setMethod(e.target.value)}>
-        <option value="نقدي">نقدي</option>
-        <option value="تحويل">تحويل بنكي</option>
-        <option value="بطاقة">بطاقة</option>
+        <option value="Cash">Cash</option>
+        <option value="Transfer">Bank Transfer</option>
+        <option value="Card">Card</option>
       </select>
-      <label className="flex items-center gap-2 text-sm text-white/70">
-        <input type="checkbox" checked={paid} onChange={(e) => setPaid(e.target.checked)} className="accent-emerald-500" />
-        مدفوع
+      <label className="flex items-center gap-2 text-sm text-c-muted">
+        <input type="checkbox" checked={paid} onChange={(e) => setPaid(e.target.checked)} className="accent-c-success" />
+        Paid
       </label>
       <button onClick={submit} disabled={loading || !patientId || !amount} className="btn-primary disabled:opacity-40">
-        {loading ? "..." : "🧾 إنشاء"}
+        {loading ? "..." : "Create"}
       </button>
-      {msg && <span className="text-xs text-emerald-400">{msg}</span>}
+      {msg && <span className="text-xs text-c-success">{msg}</span>}
     </div>
   );
 }

@@ -3,47 +3,141 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    border-radius: 0 !important;
+  }
   body {
-    @apply bg-clinic-dark text-clinic-light antialiased;
+    @apply bg-c-bg text-c-light antialiased;
+    font-family: "Inter", "Noto Sans Arabic", system-ui, sans-serif;
     overflow-x: hidden;
+  }
+  ::selection {
+    background: rgba(255, 87, 34, 0.3);
+    color: #fff;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0f1218;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e2530;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff5722;
   }
 }
 
 @layer utilities {
   .glow-bg {
     background:
-      radial-gradient(ellipse at 20% 10%, rgba(20, 184, 166, 0.15) 0%, transparent 45%),
-      radial-gradient(ellipse at 85% 25%, rgba(20, 184, 166, 0.08) 0%, transparent 40%),
-      radial-gradient(ellipse at 50% 95%, rgba(20, 184, 166, 0.1) 0%, transparent 50%);
+      radial-gradient(ellipse at 15% 5%, rgba(255, 87, 34, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 20%, rgba(0, 229, 160, 0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 100%, rgba(255, 179, 0, 0.04) 0%, transparent 50%);
   }
 }
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-white/10 bg-clinic-card/80 p-6 shadow-xl backdrop-blur;
+    @apply border border-c-border bg-c-card/80 p-6 shadow-lg backdrop-blur;
+  }
+  .card:hover {
+    @apply border-c-accent/30;
   }
 
   .input {
-    @apply w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none transition-all focus:border-clinic-accent/60 focus:ring-2 focus:ring-clinic-accent/20;
+    @apply w-full border border-c-border bg-c-surface px-4 py-3 text-c-white placeholder-c-muted outline-none transition-all;
+  }
+  .input:focus {
+    @apply border-c-accent bg-c-card;
+    box-shadow: 0 0 0 1px rgba(255, 87, 34, 0.2);
+  }
+
+  .form-input {
+    @apply w-full border border-c-border bg-c-surface px-4 py-3 text-c-white placeholder-c-muted outline-none transition-all;
+  }
+  .form-input:focus {
+    @apply border-c-accent bg-c-card;
+    box-shadow: 0 0 0 1px rgba(255, 87, 34, 0.2);
   }
 
   .btn-primary {
-    @apply rounded-xl bg-clinic-accent px-6 py-3 font-semibold text-clinic-dark transition-all hover:bg-clinic-accentDark disabled:cursor-not-allowed disabled:opacity-40;
+    @apply border border-c-accent bg-c-accent px-6 py-3 font-bold uppercase tracking-wider text-c-bg transition-all;
+    font-size: 0.85rem;
+  }
+  .btn-primary:hover {
+    @apply bg-c-accentLight shadow-lg;
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0.3);
+  }
+  .btn-primary:disabled {
+    @apply cursor-not-allowed opacity-30;
   }
 
   .btn-secondary {
-    @apply rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white transition-all hover:bg-white/10;
+    @apply border border-c-border bg-transparent px-6 py-3 font-semibold uppercase tracking-wider text-c-light transition-all;
+    font-size: 0.8rem;
+  }
+  .btn-secondary:hover {
+    @apply border-c-accent bg-c-accent/10 text-c-accent;
   }
 
-  .chip {
-    @apply rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70;
+  .btn-danger {
+    @apply border border-c-danger bg-c-danger/10 px-4 py-2 text-c-danger transition-all;
+  }
+  .btn-danger:hover {
+    @apply bg-c-danger text-white;
+  }
+
+  .btn-success {
+    @apply border border-c-success bg-c-success/10 px-4 py-2 text-c-success transition-all;
+  }
+  .btn-success:hover {
+    @apply bg-c-success text-white;
+  }
+
+  .tag {
+    @apply border border-c-border bg-c-surface px-3 py-1 text-xs uppercase tracking-wider text-c-muted;
+  }
+  .tag-accent {
+    @apply border-c-accent/40 bg-c-accent/10 text-c-accent;
+  }
+  .tag-success {
+    @apply border-c-success/40 bg-c-success/10 text-c-success;
+  }
+  .tag-warning {
+    @apply border-c-gold/40 bg-c-gold/10 text-c-gold;
+  }
+  .tag-danger {
+    @apply border-c-danger/40 bg-c-danger/10 text-c-danger;
+  }
+
+  .stat-card {
+    @apply border border-c-border bg-c-card p-5 transition-all;
+  }
+  .stat-card:hover {
+    @apply border-c-accent/40;
+    box-shadow: 0 0 30px rgba(255, 87, 34, 0.08);
+  }
+
+  .nav-link {
+    @apply px-4 py-2 text-sm uppercase tracking-wider text-c-muted transition-all;
+  }
+  .nav-link:hover {
+    @apply text-c-white;
+  }
+  .nav-link.active {
+    @apply border-b-2 border-c-accent text-c-accent;
+  }
+
+  .section-title {
+    @apply mb-6 text-sm font-bold uppercase tracking-[0.2em] text-c-accent;
   }
 
   .typing-dot {
     width: 6px;
     height: 6px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 87, 34, 0.6);
     animation: typingBounce 1s infinite ease-in-out;
   }
 }

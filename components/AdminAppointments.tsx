@@ -11,19 +11,22 @@ type Appointment = {
   patients?: { name: string; phone: string } | { name: string; phone: string }[] | null;
 };
 
-const STATUS_LABEL: Record<string, { label: string; cls: string }> = {
-  booked: { label: "محجوز", cls: "border-sky-500/40 bg-sky-500/10 text-sky-300" },
-  completed: { label: "مكتمل", cls: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300" },
-  cancelled: { label: "ملغي", cls: "border-red-500/40 bg-red-500/10 text-red-300" },
+const STATUS: Record<string, { label: string; cls: string }> = {
+  booked: { label: "BOOKED", cls: "tag-accent" },
+  completed: { label: "DONE", cls: "tag-success" },
+  cancelled: { label: "CANCEL", cls: "tag-danger" },
 };
 
-export default function AdminAppointments({
-  appointments,
-  today,
-}: {
-  appointments: Appointment[];
-  today: string;
-}) {
+function getName(p: Appointment["patients"]): string {
+  if (!p) return "—";
+  return Array.isArray(p) ? p[0]?.name || "—" : p.name || "—";
+}
+function getPhone(p: Appointment["patients"]): string {
+  if (!p) return "—";
+  return Array.isArray(p) ? p[0]?.phone || "—" : p.phone || "—";
+}
+
+export default function AdminAppointments({ appointments, today }: { appointments: Appointment[]; today: string }) {
   const [list, setList] = useState(appointments);
 
   async function updateStatus(id: string, status: string) {
@@ -38,41 +41,41 @@ export default function AdminAppointments({
   }
 
   if (!list.length) {
-    return <div className="card text-center text-white/40">لا مواعيد للعرض</div>;
+    return <div className="card text-center text-c-muted">No appointments</div>;
   }
 
   return (
-    <div className="card overflow-x-auto">
+    <div className="card overflow-x-auto !p-0">
       <table className="w-full text-right text-sm">
         <thead>
-          <tr className="border-b border-white/10 text-white/50">
-            <th className="pb-3 font-medium">التاريخ</th>
-            <th className="pb-3 font-medium">الوقت</th>
-            <th className="pb-3 font-medium">المريض</th>
-            <th className="pb-3 font-medium">الهاتف</th>
-            <th className="pb-3 font-medium">السبب</th>
-            <th className="pb-3 font-medium">الحالة</th>
+          <tr className="border-b border-c-border bg-c-surface text-[10px] uppercase tracking-[0.2em] text-c-muted">
+            <th className="px-4 py-3 font-medium">Date</th>
+            <th className="px-4 py-3 font-medium">Time</th>
+            <th className="px-4 py-3 font-medium">Patient</th>
+            <th className="px-4 py-3 font-medium">Phone</th>
+            <th className="px-4 py-3 font-medium">Reason</th>
+            <th className="px-4 py-3 font-medium">Status</th>
           </tr>
         </thead>
         <tbody>
           {list.map((a) => {
-            const st = STATUS_LABEL[a.status] || STATUS_LABEL.booked;
+            const st = STATUS[a.status] || STATUS.booked;
             return (
-              <tr key={a.id} className="border-b border-white/5">
-                <td className="py-3 text-white/70">{a.date}</td>
-                <td className="py-3 font-semibold text-white">{a.time}</td>
-                <td className="py-3 text-white">{Array.isArray(a.patients) ? a.patients[0]?.name || "—" : a.patients?.name || "—"}</td>
-                <td className="py-3 text-white/70" dir="ltr">{Array.isArray(a.patients) ? a.patients[0]?.phone || "—" : a.patients?.phone || "—"}</td>
-                <td className="py-3 text-white/50">{a.reason || "—"}</td>
-                <td className="py-3">
+              <tr key={a.id} className="border-b border-c-border/50 transition-colors hover:bg-c-surface/50">
+                <td className="px-4 py-3 text-c-muted">{a.date}</td>
+                <td className="px-4 py-3 font-bold text-c-white">{a.time}</td>
+                <td className="px-4 py-3 text-c-light">{getName(a.patients)}</td>
+                <td className="px-4 py-3 text-c-muted" dir="ltr">{getPhone(a.patients)}</td>
+                <td className="px-4 py-3 text-c-muted">{a.reason || "—"}</td>
+                <td className="px-4 py-3">
                   <select
                     value={a.status}
                     onChange={(e) => updateStatus(a.id, e.target.value)}
-                    className={`cursor-pointer rounded-lg border px-2 py-1 text-xs ${st.cls}`}
+                    className={`cursor-pointer border px-2 py-1 text-[10px] uppercase tracking-wider ${st.cls}`}
                   >
-                    <option value="booked">محجوز</option>
-                    <option value="completed">مكتمل</option>
-                    <option value="cancelled">ملغي</option>
+                    <option value="booked">Booked</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
                   </select>
                 </td>
               </tr>

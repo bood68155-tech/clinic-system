@@ -1,24 +1,20 @@
-import BookingForm from "@/components/BookingForm";
 import Header from "@/components/Header";
+import BookingForm from "@/components/BookingForm";
 
 export const dynamic = "force-dynamic";
 
 export default function BookPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none fixed inset-0 opacity-40 glow-bg" />
-
+    <>
       <Header back />
-
-      <section className="relative z-10 mx-auto max-w-2xl px-6 py-10">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-white md:text-4xl">حجز موعد جديد</h1>
-          <p className="mt-2 text-white/60">
-            اختاري التاريخ وشوفي المواعيد المتاحة مباشرة — بدون مكالمات
-          </p>
+      <main className="relative min-h-[calc(100vh-65px)]">
+        <div className="pointer-events-none fixed inset-0 glow-bg" />
+        <div className="relative z-10 mx-auto max-w-2xl px-6 py-12">
+          <h1 className="mb-2 text-2xl font-black uppercase tracking-[0.15em] text-c-white">Book Appointment</h1>
+          <p className="mb-8 text-sm text-c-muted">Select date and available time slot</p>
+          <BookingForm />
         </div>
-        <BookingForm />
-      </section>
-    </main>
+      </main>
+    </>
   );
 }
