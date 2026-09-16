@@ -3,51 +3,45 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    border-radius: 0 !important;
-  }
+  * { border-radius: 0 !important; }
   body {
     @apply bg-c-bg text-c-light antialiased;
     font-family: "Inter", "Noto Sans Arabic", system-ui, sans-serif;
     overflow-x: hidden;
   }
-  ::selection {
-    background: rgba(45, 212, 191, 0.3);
-    color: #fff;
-  }
+  ::selection { background: rgba(255,255,255,0.2); color: #fff; }
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #0e1a17; }
-  ::-webkit-scrollbar-thumb { background: #1f332d; }
-  ::-webkit-scrollbar-thumb:hover { background: #2dd4bf; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #333; }
+  ::-webkit-scrollbar-thumb:hover { background: #fff; }
 }
 
 @layer utilities {
   .glow-bg {
     background:
-      radial-gradient(ellipse at 15% 5%, rgba(45, 212, 191, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
-      radial-gradient(ellipse at 50% 100%, rgba(240, 180, 41, 0.03) 0%, transparent 50%);
+      radial-gradient(ellipse at 15% 5%, rgba(255,255,255,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 20%, rgba(255,255,255,0.02) 0%, transparent 40%);
   }
   .tooth-grid {
     background-image:
-      linear-gradient(rgba(45, 212, 191, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45, 212, 191, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
     background-size: 48px 48px;
   }
 }
 
 @layer components {
   .card {
-    @apply border border-c-border bg-c-card/80 p-6 shadow-lg backdrop-blur;
+    @apply border border-c-border bg-c-card p-6;
   }
-  .card:hover { @apply border-c-accent/30; }
+  .card:hover { @apply border-c-accent/20; }
 
   .input, .form-input {
     @apply w-full border border-c-border bg-c-surface px-4 py-3 text-c-white placeholder-c-muted outline-none transition-all;
   }
   .input:focus, .form-input:focus {
     @apply border-c-accent bg-c-card;
-    box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.2);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
   }
 
   .btn-primary {
@@ -55,10 +49,7 @@
     font-size: 0.85rem;
     letter-spacing: 0.08em;
   }
-  .btn-primary:hover {
-    @apply bg-c-accentLight;
-    box-shadow: 0 0 20px rgba(45, 212, 191, 0.35);
-  }
+  .btn-primary:hover { @apply bg-white; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
   .btn-primary:disabled { @apply cursor-not-allowed opacity-30; }
 
   .btn-secondary {
@@ -66,29 +57,25 @@
     font-size: 0.8rem;
     letter-spacing: 0.05em;
   }
-  .btn-secondary:hover { @apply border-c-accent bg-c-accent/10 text-c-accent; }
+  .btn-secondary:hover { @apply border-c-accent bg-white/5 text-c-accent; }
 
   .btn-danger { @apply border border-c-danger bg-c-danger/10 px-4 py-2 text-c-danger transition-all; }
-  .btn-danger:hover { @apply bg-c-danger text-white; }
+  .btn-danger:hover { @apply bg-c-danger text-black; }
 
   .tag {
     @apply border border-c-border bg-c-surface px-3 py-1 text-xs uppercase tracking-wider text-c-muted;
   }
-  .tag-accent { @apply border-c-accent/40 bg-c-accent/10 text-c-accent; }
-  .tag-success { @apply border-c-success/40 bg-c-success/10 text-c-success; }
-  .tag-warning { @apply border-c-gold/40 bg-c-gold/10 text-c-gold; }
-  .tag-danger { @apply border-c-danger/40 bg-c-danger/10 text-c-danger; }
+  .tag-accent { @apply border-c-accent/30 bg-c-accent/10 text-c-accent; }
+  .tag-success { @apply border-c-accent/30 bg-c-accent/10 text-c-accent; }
+  .tag-warning { @apply border-c-gold/30 bg-c-gold/10 text-c-gold; }
+  .tag-danger { @apply border-c-danger/30 bg-c-danger/10 text-c-danger; }
 
   .stat-card { @apply border border-c-border bg-c-card p-5 transition-all; }
-  .stat-card:hover { @apply border-c-accent/40; box-shadow: 0 0 30px rgba(45, 212, 191, 0.08); }
+  .stat-card:hover { @apply border-white/20; }
 
-  .nav-link { @apply px-4 py-2 text-sm uppercase tracking-wider text-c-muted transition-all; }
-  .nav-link:hover { @apply text-c-white; }
-  .nav-link.active { @apply border-b-2 border-c-accent text-c-accent; }
+  .section-title { @apply mb-6 text-xs font-bold uppercase tracking-[0.25em] text-c-white; }
 
-  .section-title { @apply mb-6 text-xs font-bold uppercase tracking-[0.25em] text-c-accent; }
-
-  .typing-dot { width: 6px; height: 6px; background: rgba(45, 212, 191, 0.6); animation: typingBounce 1s infinite ease-in-out; }
+  .typing-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); animation: typingBounce 1s infinite ease-in-out; }
 }
 
 @keyframes typingBounce {
