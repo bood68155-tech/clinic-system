@@ -3,31 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "@/lib/translations/context";
-
-const NAV_ICONS: Record<string, string> = {
-  "/admin": "◈",
-  "/admin/visits": "◉",
-  "/admin/patients": "◎",
-  "/admin/invoices": "▣",
-  "/admin/doctors": "◇",
-  "/admin/settings": "⬡",
-};
+import ToothIcon from "@/components/ToothIcon";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
-  const { t, lang, toggle } = useLang();
+  const { t, lang } = useLang();
 
   const NAV = [
-    { href: "/admin", label: t.admin.dashboard },
-    { href: "/admin/visits", label: t.admin.visitsLog },
-    { href: "/admin/patients", label: t.admin.patients },
-    { href: "/admin/invoices", label: t.admin.invoices },
-    { href: "/admin/doctors", label: t.admin.doctors },
-    { href: "/admin/settings", label: t.admin.settings },
+    { href: "/admin", label: lang === "ar" ? "الرئيسية" : "Overview", icon: "check" as const },
+    { href: "/admin/visits", label: lang === "ar" ? "الزيارات" : "Visits", icon: "tooth" as const },
+    { href: "/admin/patients", label: lang === "ar" ? "المرضى" : "Patients", icon: "smile" as const },
+    { href: "/admin/invoices", label: lang === "ar" ? "الفواتير" : "Invoices", icon: "shield" as const },
+    { href: "/admin/doctors", label: lang === "ar" ? "الأطباء" : "Doctors", icon: "sparkle" as const },
+    { href: "/admin/settings", label: lang === "ar" ? "الإعدادات" : "Settings", icon: "check" as const },
   ];
 
   return (
-    <nav className="flex flex-col gap-0.5 md:flex-row md:items-center md:gap-1">
+    <nav className="flex flex-wrap items-center gap-1">
       {NAV.map((n) => (
         <Link
           key={n.href}
@@ -38,18 +30,13 @@ export default function AdminSidebar() {
               : "text-c-muted hover:text-c-white"
           }`}
         >
-          <span className="text-c-accent/60">{NAV_ICONS[n.href] || "•"}</span>
+          <ToothIcon variant={n.icon} className="h-4 w-4" />
           <span>{n.label}</span>
         </Link>
       ))}
-      <div className="mr-auto flex items-center gap-2">
-        <button onClick={toggle} className="px-2 py-1 text-xs text-c-muted hover:text-c-white transition-all">
-          {t.lang.switch}
-        </button>
-        <a href="/" className="px-2 py-1 text-xs text-c-muted hover:text-c-white transition-all hidden md:block">↩</a>
-        <a href="/api/admin/logout" className="px-2 py-1 text-xs text-c-danger hover:text-red-300 transition-all hidden md:block">
-          {t.nav.logout}
-        </a>
+      <div className="mr-auto flex items-center gap-1">
+        <a href="/" className="px-2 py-1 text-xs text-c-muted hover:text-c-white">↩</a>
+        <a href="/api/admin/logout" className="px-2 py-1 text-xs text-c-danger">{t.nav.logout}</a>
       </div>
     </nav>
   );

@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import AdminAppointments from "@/components/AdminAppointments";
 import AdminStats from "@/components/AdminStats";
+import ToothIcon from "@/components/ToothIcon";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -53,21 +54,27 @@ export default async function AdminPage() {
 
       <div className="mb-8 grid gap-4 md:grid-cols-3">
         <Link href="/admin/visits" className="stat-card group flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center bg-c-accent/10 text-2xl text-c-accent transition-all group-hover:bg-c-accent group-hover:text-c-bg">◉</span>
+          <span className="flex h-12 w-12 items-center justify-center bg-c-accent/10 text-c-accent transition-all group-hover:bg-c-accent group-hover:text-c-bg">
+            <ToothIcon className="h-6 w-6" />
+          </span>
           <div>
             <div className="text-sm font-bold uppercase tracking-wider text-c-white">New Visit</div>
             <div className="text-xs text-c-muted">Visit + Prescription</div>
           </div>
         </Link>
         <Link href="/admin/invoices" className="stat-card group flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center bg-c-gold/10 text-2xl text-c-gold transition-all group-hover:bg-c-gold group-hover:text-c-bg">▣</span>
+          <span className="flex h-12 w-12 items-center justify-center bg-c-gold/10 text-c-gold transition-all group-hover:bg-c-gold group-hover:text-c-bg">
+            <ToothIcon variant="shield" className="h-6 w-6" />
+          </span>
           <div>
             <div className="text-sm font-bold uppercase tracking-wider text-c-white">New Invoice</div>
             <div className="text-xs text-c-muted">Bill a patient</div>
           </div>
         </Link>
         <Link href="/admin/patients" className="stat-card group flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center bg-c-teal/10 text-2xl text-c-teal transition-all group-hover:bg-c-teal group-hover:text-c-bg">◎</span>
+          <span className="flex h-12 w-12 items-center justify-center bg-c-cyan/10 text-c-cyan transition-all group-hover:bg-c-cyan group-hover:text-c-bg">
+            <ToothIcon variant="smile" className="h-6 w-6" />
+          </span>
           <div>
             <div className="text-sm font-bold uppercase tracking-wider text-c-white">Patients</div>
             <div className="text-xs text-c-muted">View all records</div>

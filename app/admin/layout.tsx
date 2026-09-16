@@ -1,4 +1,5 @@
 import AdminSidebar from "@/components/AdminSidebar";
+import ToothIcon from "@/components/ToothIcon";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,8 +8,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="relative z-10 mx-auto max-w-6xl">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-c-border px-4 py-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-7 w-7 items-center justify-center bg-c-accent text-[10px] font-black text-c-bg">+</span>
-            <span className="text-sm font-black uppercase tracking-wider text-c-white">Dashboard</span>
+            <ToothIcon className="h-6 w-6 text-c-accent" />
+            <span className="text-sm font-black uppercase tracking-[0.15em] text-c-white">Dental Dashboard</span>
           </div>
           <AdminSidebar />
         </div>
