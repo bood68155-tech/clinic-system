@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-clinic-dark text-clinic-light antialiased;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .glow-bg {
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(20, 184, 166, 0.15) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 25%, rgba(20, 184, 166, 0.08) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 95%, rgba(20, 184, 166, 0.1) 0%, transparent 50%);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-white/10 bg-clinic-card/80 p-6 shadow-xl backdrop-blur;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none transition-all focus:border-clinic-accent/60 focus:ring-2 focus:ring-clinic-accent/20;
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-clinic-accent px-6 py-3 font-semibold text-clinic-dark transition-all hover:bg-clinic-accentDark disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white transition-all hover:bg-white/10;
+  }
+
+  .chip {
+    @apply rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70;
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    animation: typingBounce 1s infinite ease-in-out;
+  }
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
