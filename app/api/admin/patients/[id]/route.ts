@@ -6,6 +6,8 @@ function isAdmin(req: Request) {
   return pass && (req.headers.get("cookie") || "").includes(`clinic-admin=${pass}`);
 }
 
+export const dynamic = "force-dynamic";
+
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
   if (!isAdmin(_req)) return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
   const { id } = params;

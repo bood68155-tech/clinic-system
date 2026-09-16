@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { runAgent } from "@/lib/agent";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const { messages } = await req.json();
   if (!Array.isArray(messages) || messages.length === 0) {

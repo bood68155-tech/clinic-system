@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const { password } = await req.json();
   const pass = process.env.ADMIN_PASSWORD;

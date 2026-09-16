@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const token = req.headers.get("cookie") || "";
   const pass = process.env.ADMIN_PASSWORD;

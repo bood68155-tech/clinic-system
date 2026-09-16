@@ -22,6 +22,8 @@ async function findOrCreatePatient(name: string, phone: string): Promise<string>
   return created!.id;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: Request) {
   if (!isAdmin(req)) return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
   const { searchParams } = new URL(req.url);
