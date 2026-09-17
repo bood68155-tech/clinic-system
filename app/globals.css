@@ -17,17 +17,58 @@
 }
 
 @layer utilities {
+  /* ── Enhanced glow background ── */
   .glow-bg {
     background:
-      radial-gradient(ellipse at 15% 5%, rgba(255,255,255,0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 20%, rgba(255,255,255,0.02) 0%, transparent 40%);
+      radial-gradient(ellipse at 10% 0%, rgba(255,255,255,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 15%, rgba(255,255,255,0.035) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 80%, rgba(255,255,255,0.02) 0%, transparent 50%),
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.015) 0%, transparent 30%);
   }
+
+  /* ── Enhanced futuristic grid ── */
   .tooth-grid {
     background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.015) 0%, transparent 70%);
+    background-size: 48px 48px, 48px 48px, 100% 100%;
   }
+}
+
+/* ── Ambient floating orbs ── */
+.ambient-orb {
+  animation: orbDrift 20s ease-in-out infinite;
+}
+.ambient-orb--delayed {
+  animation: orbDrift 25s ease-in-out 5s infinite reverse;
+}
+.ambient-orb--slow {
+  animation: orbDrift 30s ease-in-out 10s infinite;
+}
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
+  25% { transform: translate(30px, -20px) scale(1.05); opacity: 0.7; }
+  50% { transform: translate(-20px, 15px) scale(0.95); opacity: 1; }
+  75% { transform: translate(15px, 25px) scale(1.03); opacity: 0.8; }
+}
+
+/* ── Ambient floating icons ── */
+.ambient-float {
+  animation: floatY 12s ease-in-out infinite;
+}
+.ambient-float--delayed {
+  animation: floatY 15s ease-in-out 3s infinite;
+}
+.ambient-float--slow {
+  animation: floatY 18s ease-in-out 7s infinite;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-18px) rotate(3deg); }
+  66% { transform: translateY(12px) rotate(-2deg); }
 }
 
 @layer components {

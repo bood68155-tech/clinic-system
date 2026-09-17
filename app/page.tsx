@@ -5,20 +5,72 @@ import Header from "@/components/Header";
 import ChatWidget from "@/components/ChatWidget";
 import ToothIcon from "@/components/ToothIcon";
 import { useLang } from "@/lib/translations/context";
+import { useClinicSettings } from "@/lib/use-clinic-settings";
 
 export default function Home() {
   const { t, lang } = useLang();
   const isAr = lang === "ar";
+  const { clinic_logo } = useClinicSettings();
 
   return (
     <>
       <Header />
-      <main className="tooth-grid relative min-h-[calc(100vh-65px)]">
+      <main className="tooth-grid relative min-h-[calc(100vh-65px)] overflow-hidden">
+        {/* Glow background */}
         <div className="pointer-events-none fixed inset-0 glow-bg" />
 
+        {/* ── Floating ambient elements ── */}
+        {/* Glowing orb top-left */}
+        <div className="ambient-orb pointer-events-none fixed -top-32 -left-32 h-96 w-96 rounded-full bg-white/[0.02] blur-[120px]" />
+        {/* Glowing orb bottom-right */}
+        <div className="ambient-orb ambient-orb--delayed pointer-events-none fixed -bottom-24 -right-24 h-80 w-80 rounded-full bg-white/[0.015] blur-[100px]" />
+        {/* Glowing orb center accent */}
+        <div className="ambient-orb ambient-orb--slow pointer-events-none fixed top-1/3 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-white/[0.018] blur-[90px]" />
+
+        {/* Floating dental icons */}
+        <div className="ambient-float pointer-events-none fixed top-[15%] left-[8%] opacity-[0.04]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="h-16 w-16 text-white">
+            <path d="M12 3.5c-1.5-1-3.6-.8-4.8.8-2 2.7-3 6-2 9.3.8 2.7.6 6 .6 6s2 .3 3.2-1c.7-.8 1.4-1.2 3-1.2s2.3.4 3 1.2c1.2 1.3 3.2 1 3.2 1s-.2-3.3.6-6c1-3.3 0-6.6-2-9.3C15.6 2.7 13.5 2.5 12 3.5z" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <div className="ambient-float ambient-float--delayed pointer-events-none fixed top-[60%] right-[6%] opacity-[0.03]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="h-12 w-12 text-white">
+            <path d="M12 3l1.8 4.8L18 9.6l-4.2 1.8L12 16l-1.8-4.6L6 9.6l4.2-1.8L12 3z" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <div className="ambient-float ambient-float--slow pointer-events-none fixed top-[40%] left-[85%] opacity-[0.03]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="h-10 w-10 text-white">
+            <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z" strokeLinejoin="round" />
+            <path d="M9 11l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <div className="ambient-float pointer-events-none fixed bottom-[20%] left-[15%] opacity-[0.035]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="h-14 w-14 text-white">
+            <path d="M4 13a8 8 0 0 1 16 0" />
+            <path d="M6 13c0 4 2.5 6 6 6s6-2 6-6" />
+          </svg>
+        </div>
+
+        {/* Grid accent glow lines */}
+        <div className="pointer-events-none fixed top-0 left-1/4 h-full w-px bg-gradient-to-b from-transparent via-white/[0.04] to-transparent" />
+        <div className="pointer-events-none fixed top-0 left-2/4 h-full w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent" />
+        <div className="pointer-events-none fixed top-0 left-3/4 h-full w-px bg-gradient-to-b from-transparent via-white/[0.04] to-transparent" />
+        <div className="pointer-events-none fixed top-1/3 left-0 h-px w-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+        <div className="pointer-events-none fixed top-2/3 left-0 h-px w-full bg-gradient-to-r from-transparent via-white/[0.03] to-transparent" />
+
+        {/* Hero content */}
         <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 text-center">
           <div className="animate-shine mb-8">
-            <ToothIcon className="h-24 w-24 text-c-accent" />
+            {clinic_logo ? (
+              <img
+                src={clinic_logo}
+                alt="Clinic Logo"
+                className="h-24 w-24 rounded-sm object-cover"
+                style={{ filter: "drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
+              />
+            ) : (
+              <ToothIcon className="h-24 w-24 text-c-accent" />
+            )}
           </div>
 
           <div className="mb-6 flex items-center gap-3">
