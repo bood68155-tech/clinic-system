@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import DentalChart from "@/components/DentalChart";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +16,21 @@ export default async function PatientDetailPage({ params }: { params: { id: stri
 
   const { data: appointments } = await supabase.from("appointments").select("id, date, time, status, reason").eq("patient_id", id).order("date", { ascending: false }).limit(20);
   const { data: invoices } = await supabase.from("invoices").select("*").eq("patient_id", id).order("created_at", { ascending: false });
+
+  // Quick prescriptions are linked straight to the patient (no visit required).
+  const { data: quickPrescriptions } = await supabase
+    .from("prescriptions")
+    .select("id, medication, dosage, frequency, duration, instructions, created_at")
+    .eq("patient_id", id)
+    .order("created_at", { ascending: false })
+    .limit(30);
+
+  const { data: xrayAnalyses } = await supabase
+    .from("xray_analyses")
+    .select("id, source, summary, quality_score, created_at, findings")
+    .eq("patient_id", id)
+    .order("created_at", { ascending: false })
+    .limit(5);
 
   const totalPaid = (invoices || []).filter((i) => i.paid).reduce((s, i) => s + Number(i.amount), 0);
   const totalPending = (invoices || []).filter((i) => !i.paid).reduce((s, i) => s + Number(i.amount), 0);
@@ -31,6 +48,64 @@ export default async function PatientDetailPage({ params }: { params: { id: stri
         <div className="bg-c-card p-5"><div className="text-[10px] uppercase tracking-wider text-c-muted">Paid</div><div className="mt-1 text-3xl font-black text-c-success">{totalPaid.toLocaleString()} SAR</div></div>
         <div className="bg-c-card p-5"><div className="text-[10px] uppercase tracking-wider text-c-muted">Pending</div><div className="mt-1 text-3xl font-black text-c-gold">{totalPending.toLocaleString()} SAR</div></div>
       </div>
+
+      <div className="mb-8">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h2 className="section-title !mb-0">Clinical Tools</h2>
+          <div className="flex flex-wrap gap-2">
+            <Link href={`/admin/tools?patient=${id}`} className="btn-secondary !px-3 !py-1.5 !text-[11px]">
+              AI X-Ray
+            </Link>
+            <Link href={`/admin/tools?patient=${id}`} className="btn-secondary !px-3 !py-1.5 !text-[11px]">
+              Treatment Plan
+            </Link>
+            <Link href={`/admin/tools?patient=${id}`} className="btn-secondary !px-3 !py-1.5 !text-[11px]">
+              Prescription & WhatsApp
+            </Link>
+          </div>
+        </div>
+        <DentalChart patientId={id} patientName={patient.name} />
+      </div>
+
+      {(quickPrescriptions || []).length > 0 && (
+        <div className="mb-8">
+          <h2 className="section-title">Quick Prescriptions</h2>
+          <div className="space-y-3">
+            {(quickPrescriptions || []).map((rx: any) => (
+              <div key={rx.id} className="card">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-sm font-bold text-c-white">{rx.medication}</span>
+                  <span className="text-[10px] uppercase tracking-wider text-c-muted">{String(rx.created_at).slice(0, 10)}</span>
+                </div>
+                <p className="text-xs text-c-muted">
+                  {[rx.dosage, rx.frequency, rx.duration].filter(Boolean).join(" | ")}
+                </p>
+                {rx.instructions && <p className="mt-1 text-xs text-c-light">{rx.instructions}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {(xrayAnalyses || []).length > 0 && (
+        <div className="mb-8">
+          <h2 className="section-title">Radiology</h2>
+          <div className="space-y-3">
+            {(xrayAnalyses || []).map((x: any) => (
+              <div key={x.id} className="card">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-[10px] uppercase tracking-wider text-c-muted">{String(x.created_at).slice(0, 16).replace("T", " ")}</span>
+                  <span className="tag !text-[10px]">{x.source === "gemini" ? "Gemini Vision" : "Simulator"} · {x.quality_score}%</span>
+                </div>
+                <p className="text-xs text-c-light">{x.summary}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-c-muted">
+                  {Array.isArray(x.findings) ? x.findings.length : 0} findings
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="mb-8">
         <h2 className="section-title">Medical Visits</h2>

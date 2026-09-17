@@ -32,11 +32,16 @@ const config: Config = {
       animation: {
         "fade-up": "fadeUp 0.4s ease-out",
         shine: "shine 3s ease-in-out infinite",
+        scan: "scanY 1.3s ease-in-out infinite",
       },
       keyframes: {
         fadeUp: {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        scanY: {
+          "0%": { top: "0%" },
+          "100%": { top: "100%" },
         },
         shine: {
           "0%, 100%": { filter: "drop-shadow(0 0 8px rgba(255,255,255,0.3))" },

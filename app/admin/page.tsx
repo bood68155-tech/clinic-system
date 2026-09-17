@@ -52,7 +52,7 @@ export default async function AdminPage() {
         today={today}
       />
 
-      <div className="mb-8 grid gap-4 md:grid-cols-3">
+      <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Link href="/admin/visits" className="stat-card group flex items-center gap-4">
           <span className="flex h-12 w-12 items-center justify-center bg-c-accent/10 text-c-accent transition-all group-hover:bg-c-accent group-hover:text-c-bg">
             <ToothIcon className="h-6 w-6" />
@@ -78,6 +78,15 @@ export default async function AdminPage() {
           <div>
             <div className="text-sm font-bold uppercase tracking-wider text-c-white">Patients</div>
             <div className="text-xs text-c-muted">View all records</div>
+          </div>
+        </Link>
+        <Link href="/admin/tools" className="stat-card group flex items-center gap-4">
+          <span className="flex h-12 w-12 items-center justify-center bg-c-danger/10 text-c-danger transition-all group-hover:bg-c-danger group-hover:text-c-bg">
+            <ToothIcon variant="sparkle" className="h-6 w-6" />
+          </span>
+          <div>
+            <div className="text-sm font-bold uppercase tracking-wider text-c-white">Clinical Tools</div>
+            <div className="text-xs text-c-muted">Chart, X-ray, plans & Rx</div>
           </div>
         </Link>
       </div>

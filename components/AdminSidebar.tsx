@@ -15,6 +15,7 @@ export default function AdminSidebar() {
     { href: "/admin/patients", label: lang === "ar" ? "المرضى" : "Patients", icon: "smile" as const },
     { href: "/admin/invoices", label: lang === "ar" ? "الفواتير" : "Invoices", icon: "shield" as const },
     { href: "/admin/doctors", label: lang === "ar" ? "الأطباء" : "Doctors", icon: "sparkle" as const },
+    { href: "/admin/tools", label: lang === "ar" ? "الأدوات الإكلينيكية" : "Clinical Tools", icon: "plus" as const },
     { href: "/admin/settings", label: lang === "ar" ? "الإعدادات" : "Settings", icon: "check" as const },
   ];
 
@@ -25,7 +26,7 @@ export default function AdminSidebar() {
           key={n.href}
           href={n.href}
           className={`flex items-center gap-2 px-3 py-2 text-xs uppercase tracking-wider transition-all ${
-            pathname === n.href
+            pathname === n.href || (n.href !== "/admin" && pathname.startsWith(`${n.href}/`))
               ? "border-b-2 border-c-accent text-c-accent"
               : "text-c-muted hover:text-c-white"
           }`}
