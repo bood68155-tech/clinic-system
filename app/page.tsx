@@ -60,17 +60,36 @@ export default function Home() {
 
         {/* Hero content */}
         <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 text-center">
-          <div className="animate-shine mb-8">
-            {clinic_logo ? (
-              <img
-                src={clinic_logo}
-                alt="Clinic Logo"
-                className="h-24 w-24 rounded-sm object-cover"
-                style={{ filter: "drop-shadow(0 0 20px rgba(255,255,255,0.15))" }}
-              />
-            ) : (
-              <ToothIcon className="h-24 w-24 text-c-accent" />
-            )}
+          {/* ── Premium framed hero image ── */}
+          <div className="hero-frame relative mb-8">
+            {/* Outer ambient glow pulse */}
+            <div className="pointer-events-none absolute -inset-6 rounded-full bg-white/[0.06] blur-2xl hero-frame-glow" />
+
+            {/* Gradient border ring (outer) */}
+            <div className="hero-frame-border relative rounded-full p-[2px]">
+              {/* Glassmorphism inner rim */}
+              <div className="relative rounded-full bg-black/60 p-[1px] backdrop-blur-sm">
+                {/* Metallic inner border */}
+                <div className="rounded-full bg-gradient-to-br from-white/20 via-white/5 to-white/15 p-[1px]">
+                  {/* Image container */}
+                  <div className="relative h-44 w-44 overflow-hidden rounded-full bg-c-surface sm:h-48 sm:w-48 md:h-52 md:w-52">
+                    {clinic_logo ? (
+                      <img
+                        src={clinic_logo}
+                        alt="Clinic Logo"
+                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center">
+                        <ToothIcon className="h-24 w-24 text-c-accent sm:h-28 sm:w-28 md:h-32 md:w-32" />
+                      </div>
+                    )}
+                    {/* Inner rim shine overlay */}
+                    <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-white/[0.07] via-transparent to-transparent" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="mb-6 flex items-center gap-3">

@@ -123,3 +123,30 @@
   0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
   40% { transform: translateY(-4px); opacity: 1; }
 }
+
+/* ── Hero premium frame ── */
+.hero-frame-border {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 200, 180, 0.35),
+    rgba(100, 120, 255, 0.2),
+    rgba(200, 170, 50, 0.25),
+    rgba(0, 200, 180, 0.35)
+  );
+  background-size: 300% 300%;
+  animation: heroFrameBorder 6s ease-in-out infinite;
+}
+
+@keyframes heroFrameBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-frame-glow {
+  animation: heroFrameGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroFrameGlow {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.7; transform: scale(1.08); }
+}
